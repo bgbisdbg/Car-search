@@ -1,13 +1,12 @@
 <html>
 <head>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <style>
         body {
             display: flex;
             flex-direction: column;
             align-items: flex-end;
             height: 100vh;
-            background-color: black;
+            background-color: #887c7c;
             color: white;
         }
 
@@ -50,7 +49,7 @@
             top: 0;
             right: 0;
             border-radius: 50%;
-            color: black;
+            color: #ffffff;
             text-align: center;
             font-size: 1.2em;
             transition: all 1s;
@@ -67,66 +66,51 @@
 
         form:hover .fa{
             background: white;
-            color: black;
+            color: #efefef;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            color: white;
+            color: #000000;
         }
         th, td {
-            border: 1px solid white;
+            border: 1px solid #000000;
             padding: 8px;
             text-align: left;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #886969;
         }
     </style>
 </head>
 <body>
-    <form action="">
-        <input type="search">
-        <i class="fa fa-search"></i>
+    <form method="GET">
+        <input type="text" name="model" placeholder="Model">
+        <input type="text" name="price" placeholder="Price">
+        <button type="submit">Filter</button>
     </form>
-
-    <table>
-        <tr>
-            <th>Header 1</th>
-            <th>Header 2</th>
-            <th>Header 3</th>
-            <th>Header 4</th>
-            <th>Header 5</th>
-        </tr>
-        <tr>
-            <td>Row 1, Col 1</td>
-            <td>Row 1, Col 2</td>
-            <td>Row 1, Col 3</td>
-            <td>Row 1, Col 4</td>
-            <td>Row 1, Col 5</td>
-        </tr>
-        <tr>
-            <td>Row 2, Col 1</td>
-            <td>Row 2, Col 2</td>
-            <td>Row 2, Col 3</td>
-            <td>Row 2, Col 4</td>
-            <td>Row 2, Col 5</td>
-        </tr>
-        <tr>
-            <td>Row 3, Col 1</td>
-            <td>Row 3, Col 2</td>
-            <td>Row 3, Col 3</td>
-            <td>Row 3, Col 4</td>
-            <td>Row 3, Col 5</td>
-        </tr>
-        <tr>
-            <td>Row 4, Col 1</td>
-            <td>Row 4, Col 2</td>
-            <td>Row 4, Col 3</td>
-            <td>Row 4, Col 4</td>
-            <td>Row 4, Col 5</td>
-        </tr>
-    </table>
+    {% block content %}
+            <table>
+                <tr>
+                    <th>Brand</th>
+                    <th>Model</th>
+                    <th>Year</th>
+                    <th>price</th>
+                    <th>link</th>
+                </tr>
+                    {% for car in object_list %}
+                        <tr>
+                            <td>{{ car.brand }}</td>
+                            <td>{{ car.name }}</td>
+                            <td>{{ car.year }}</td>
+                            <td>{{ car.price }}</td>
+                        </tr>
+                    {% endfor %}
+            </table>
+    {% endblock %}
+    <form method="get">
+        <button type="submit" name="reset_filters" value="true">Сбросить фильтры</button>
+    </form>
 </body>
 </html>
