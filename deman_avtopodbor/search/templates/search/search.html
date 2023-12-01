@@ -1,116 +1,129 @@
+{% load static humanize %}
+
+<!DOCTYPE html>
 <html>
 <head>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            height: 100vh;
-            background-color: #887c7c;
-            color: white;
-        }
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<title>{{ title }}</title>
+<link rel="shortcut icon" href="{% static 'static/a198cd0c_e2f0_4c99_ba51_342624a24db9_WP4_icon.ico'%}" type="image/x-icon"/>
+<link href = "https://fonts.googleapis.com/css?family=Nunito+Sans:400,900&display=swap" rel="stylesheet">
+<style>
+* {
+  box-sizing: border-box;
+}
+body,#artInput{text-align: center;}
+#artInput {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Vector_search_icon.svg/221px-Vector_search_icon.svg.png');
+  background-position: 10px 10px;;
+  background-repeat: no-repeat;
+  background-size: 25px;
+  width: 60%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+  border-radius: 25px;
+}
+#artInput:focus {
+  outline:none
+}
+#artTable {
+  border-collapse: collapse;
+  width: 85%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+  margin-bottom:40px;
+}
+#artTable th, #artTable td {
+  text-align: left;
+  padding: 12px;
+  text-align: center;
 
-        form{
-            position: relative;
-            transition: all 1s;
-            width: 50px;
-            height: 50px;
-            background: white;
-            box-sizing: border-box;
-            border-radius: 25px;
-            border: 4px solid white;
-            padding: 5px;
-            margin-top: 20px;
-            margin-right: 20px;
-            color: black;
-        }
+}
+#artTable tr {
+  border-bottom: 1px solid #ddd;
 
-        input{
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;;
-            height: 42.5px;
-            line-height: 30px;
-            outline: 0;
-            border: 0;
-            display: none;
-            font-size: 1em;
-            border-radius: 20px;
-            padding: 0 20px;
-        }
+}
+#artTable tr.header, #artTable tr:hover {
+  background-color: #f1f1f1;
 
-        .fa{
-            box-sizing: border-box;
-            padding: 10px;
-            width: 42.5px;
-            height: 42.5px;
-            position: absolute;
-            top: 0;
-            right: 0;
-            border-radius: 50%;
-            color: #ffffff;
-            text-align: center;
-            font-size: 1.2em;
-            transition: all 1s;
-        }
+}
+a {
+  color: #000000;
+}
 
-        form:hover{
-            width: 200px;
-            cursor: pointer;
-        }
+h2, h1, p {
+  font-family: 'Nunito Sans', sans-serif;
+}
+h1:hover {
+  animation-name: artshadow;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: both;
+  animation-duration: 0.5s;
+  animation-delay: 0.1s;
+}
 
-        form:hover input{
-            display: block;
-        }
-
-        form:hover .fa{
-            background: white;
-            color: #efefef;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            color: #000000;
-        }
-        th, td {
-            border: 1px solid #000000;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #886969;
-        }
-    </style>
+@keyframes artshadow {
+  from {}
+  to {text-shadow: 2px 2px 5px black;}
+}
+h1 {
+  color: #f56642;
+  transition: 0.3s;
+}
+</style>
 </head>
 <body>
-    <form method="GET">
-        <input type="text" name="model" placeholder="Model">
-        <input type="text" name="price" placeholder="Price">
-        <button type="submit">Filter</button>
-    </form>
-    {% block content %}
-            <table>
-                <tr>
-                    <th>Brand</th>
-                    <th>Model</th>
-                    <th>Year</th>
-                    <th>price</th>
-                    <th>link</th>
-                </tr>
-                    {% for car in object_list %}
-                        <tr>
-                            <td>{{ car.brand }}</td>
-                            <td>{{ car.name }}</td>
-                            <td>{{ car.year }}</td>
-                            <td>{{ car.price }}</td>
-                        </tr>
-                    {% endfor %}
-            </table>
-    {% endblock %}
-    <form method="get">
-        <button type="submit" name="reset_filters" value="true">Сбросить фильтры</button>
-    </form>
+<h1><a href="{% url 'index' %}"><b>RenArt</b></a></h1>
+<h2>Пидор</h2>
+<div class="centerenter">
+<input type="text" id="artInput" onkeyup="artFunction()" placeholder="name, date, artist..." title="Work search">
+</div>
+<div class="tablesearch">
+<table id="artTable" align="center">
+<tr class="header">
+<th style="width:25%">Brand</th>
+<th style="width:25%">Model</th>
+<th style="width:25%">Year</th>
+<th style="width:25%">price</th>
+</tr>
+{% for car in object_list %}
+    <tr>
+        <td><a href="">{{ car.brand }}</a></td>
+        <td>{{ car.name }}</td>
+        <td>{{ car.year }}</td>
+        <td>{{ car.price | intcomma }} руб.</td>
+    </tr>
+{% endfor %}
+</table>
+</div>
+<p>this project was created and is maintained by <a href = "https://micahlt.github.io/">Micah Lindley</a>.&#32;Last updated 8/21/19.</p>
+<script>function artFunction() {
+  // Declare starting variables
+  var input = document.getElementById("artInput");
+  var filter = input.value.toUpperCase();
+  var table = document.getElementById("artTable");
+  var trs = table.tBodies[0].getElementsByTagName("tr");
+  // Loop through rows
+  for (var i = 0; i < trs.length; i++) {
+    // Define the cells
+    var tds = trs[i].getElementsByTagName("td");
+    // hide the row
+    trs[i].style.display = "none";
+    // loop through row cells
+    for (var i2 = 0; i2 < tds.length; i2++) {
+      // if there's a match
+      if (tds[i2].innerHTML.toUpperCase().indexOf(filter) > -1) {
+        // show the row
+        trs[i].style.display = "";
+        // skip to the next row
+        continue;
+      }
+    }
+  }
+}
+
+</script>
 </body>
 </html>
