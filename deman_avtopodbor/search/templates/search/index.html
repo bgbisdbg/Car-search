@@ -43,40 +43,80 @@ h1 {
 }
 </style>
 </head>
-<body>
-<img src = "https://raw.githubusercontent.com/micahlt/renart/master/77E4F938-6119-49F1-906D-33252AB195CD.png" align = "center" class = "center">
-<h1><a href = "https://micahlt.github.io/renart/"><b>RenArt</b></a></h1>
-<h2>the searchable index of Renaissance art</h2><h3><a href = "{% url 'search:search' %}">Search</a> | <a href = "about.html">About</a></h3>
+{% if request.user.is_authenticated %}
+    <h3>Welcome, {{ request.user.username }}</h3>
+    <a href="{% url 'users:logout' %}" class="btn btn-danger">Logout</a>
+    <body>
+    <img src = "https://sun9-49.userapi.com/impg/tqISUubG81dsgq8O-PAmxicuvphUdqqSY1jx3Q/pNUVBaqo1vA.jpg?size=500x345&quality=95&sign=3897121b3b154735a833d675cd377713&type=album" align = "center" class = "center">
+    <h1><a href = "https://micahlt.github.io/renart/"><b>ДимасПодбор</b></a></h1>
+    <h2>the searchable index of Renaissance art</h2><h3><a href = "{% url 'search:search' %}">Search</a> | <a href = "about.html">About</a></h3>
+    <script>
+    let deferredPrompt = null;
 
-<script>
-let deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+     // Prevent Chrome 67 and earlier from automatically showing the prompt
+     e.preventDefault();
+     // Stash the event so it can be triggered later.
+     deferredPrompt = e;
+    });
 
-window.addEventListener('beforeinstallprompt', (e) => {
- // Prevent Chrome 67 and earlier from automatically showing the prompt
- e.preventDefault();
- // Stash the event so it can be triggered later.
- deferredPrompt = e;
-});
+    async function install() {
+     if (deferredPrompt) {
+       deferredPrompt.prompt();
+       console.log(deferredPrompt)
+       deferredPrompt.userChoice.then(function(choiceResult){
 
-async function install() {
- if (deferredPrompt) {
-   deferredPrompt.prompt();
-   console.log(deferredPrompt)
-   deferredPrompt.userChoice.then(function(choiceResult){
+         if (choiceResult.outcome === 'accepted') {
+         console.log('Your PWA has been installed');
+       } else {
+         console.log('User chose to not install your PWA');
+       }
 
-     if (choiceResult.outcome === 'accepted') {
-     console.log('Your PWA has been installed');
-   } else {
-     console.log('User chose to not install your PWA');
-   }
+       deferredPrompt = null;
 
-   deferredPrompt = null;
-
-   });
+       });
 
 
- }
-}
-</script>
-</body>
+     }
+    }
+    </script>
+    </body>
+{% else %}
+    <a href="{% url 'users:login' %}" class="btn btn-primary">Login</a>
+    <body>
+    <img src = "https://sun9-49.userapi.com/impg/tqISUubG81dsgq8O-PAmxicuvphUdqqSY1jx3Q/pNUVBaqo1vA.jpg?size=500x345&quality=95&sign=3897121b3b154735a833d675cd377713&type=album" align = "center" class = "center">
+    <h1><a href = "{% url 'index' %}"><b>ДимасПодбор</b></a></h1>
+    <h2>Тачка для вас, бабки для нас</h2><h3><a href = "{% url 'users:login' %}">Авторизироваться</a>
+    <script>
+    let deferredPrompt = null;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+     // Prevent Chrome 67 and earlier from automatically showing the prompt
+     e.preventDefault();
+     // Stash the event so it can be triggered later.
+     deferredPrompt = e;
+    });
+
+    async function install() {
+     if (deferredPrompt) {
+       deferredPrompt.prompt();
+       console.log(deferredPrompt)
+       deferredPrompt.userChoice.then(function(choiceResult){
+
+         if (choiceResult.outcome === 'accepted') {
+         console.log('Your PWA has been installed');
+       } else {
+         console.log('User chose to not install your PWA');
+       }
+
+       deferredPrompt = null;
+
+       });
+
+
+     }
+    }
+    </script>
+    </body>
+{% endif %}
 </html>

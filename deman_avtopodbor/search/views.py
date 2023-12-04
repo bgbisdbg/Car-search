@@ -10,6 +10,13 @@ class IndexView(TitleMixin, TemplateView):
     template_name = 'search/index.html'
     title = 'Подбор авто'
 
+    def home(request):
+        if request.user.is_authenticated:
+            context = {'show_search_link': True}
+        else:
+            context = {'show_login_link': True}
+        return render(request, 'home.html', context)
+
 
 # Класс представления для поиска автомобилей
 class SearchCarListView(TitleMixin, ListView):

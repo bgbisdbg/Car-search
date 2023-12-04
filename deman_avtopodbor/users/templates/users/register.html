@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+</head>
+<body>
+    <h2>Регистрация</h2>
+    <form action="{% url 'users:register' %}" method="post">
+        {% csrf_token %}
+        <label for="first_name">Имя:</label><br>
+        <input type="text" id="first_name" name="first_name" class="form-control py-4" placeholder="Введите имя"><br>
+        <label for="last_name">Фамилия:</label><br>
+        <input type="text" id="last_name" name="last_name" class="form-control py-4" placeholder="Введите фамилию"><br>
+        <label for="username">Имя пользователя:</label><br>
+        <input type="text" id="username" name="username" class="form-control py-4" placeholder="Введите имя пользователя"><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" class="form-control py-4" placeholder="Введите адрес эл. почты"><br>
+        <label for="password1">Пароль:</label><br>
+        <input type="password" id="password1" name="password1" class="form-control py-4" placeholder="Введите пароль"><br>
+        <label for="password2">Подтверждение пароля:</label><br>
+        <input type="password" id="password2" name="password2" class="form-control py-4" placeholder="Подтвердите пароль"><br>
+        <input type="submit" value="Зарегистрироваться">
+    </form>
+</body>
+</html>
