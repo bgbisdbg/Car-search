@@ -75,10 +75,10 @@ h1 {
 </style>
 </head>
 <body>
-<h1><a href="{% url 'index' %}"><b>RenArt</b></a></h1>
-<h2>Подбор</h2>
+<h1><a href="{% url 'index' %}"><b>АвтоПодбор</b></a></h1>
+<h2>Выберай!</h2>
 <div class="centerenter">
-<input type="text" id="artInput" onkeyup="artFunction()" placeholder="name, date, artist..." title="Work search">
+<input type="text" id="artInput" onkeyup="artFunction()" placeholder="Бренд, марка, цена" title="Work search">
 </div>
 <div class="tablesearch">
 <table id="artTable" align="center">
@@ -90,7 +90,7 @@ h1 {
 </tr>
 {% for car in object_list %}
     <tr>
-        <td><a href="">{{ car.brand }}</a></td>
+        <td><a href="{{ car.link }}">{{ car.brand }}</a></td>
         <td>{{ car.name }}</td>
         <td>{{ car.year }}</td>
         <td>{{ car.price | intcomma }} руб.</td>
